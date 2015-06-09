@@ -130,6 +130,10 @@ class Ball(Entity):
         # bounce off at a random direction. I want the angle between the two to
         # be low though
         x = (self.vel[0] + random.randint(0,3))*angle[0]
-        y = (self.vel[1] + random.randint(0,3))*angle[1]
+        y = (self.vel[1])*angle[1]
         self.vel = (x,y)
+
+    def stop(self):
+        self.vel = (0,0)
+        self.in_play = False
 # end Ball definition

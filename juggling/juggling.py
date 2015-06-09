@@ -16,7 +16,7 @@ def main():
     puck = models.Puck()
     ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
-    ball.pos = [32,32]
+    ball.pos = [300,32]
     clock = pygame.time.Clock()
 
 
@@ -64,17 +64,21 @@ def main():
         # or puck.)
         
         if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
+            # paddle
             ball.bounce((1,-1))
-
-        elif ball.pos[0] <= 0:
+        elif ball.pos[0] <= 0: 
+            # left wall
+            ball.bounce((-1,1))
+        elif ball.pos[0] >= config.WIDTH:
             ball.bounce((-1,1))
 
-        elif ball.pos[0] >= config.WIDTH:
-            ball.bounce((-1,-1))
-
         elif ball.pos[1] <= 0:
-            ball.bounce((-1,-1))
-        
+            ball.bounce(-1,-1)
+
+        elif ball.pos[1] >= config.HEIGHT:
+            # ball lost
+            ball.stop()
+
         ball.update(w)
         # draw stuff
         puck.draw(w)

@@ -21,7 +21,7 @@ class Entity:
         """
         position should be a tuple containing two integers
         """
-        self.pos = {'x':position[0],'y':position[1]}
+        self.pos = (position[0], position[1])
         self.bounds = position
 
     def draw(self, screen, color = None):
@@ -53,7 +53,7 @@ class Puck(Entity):
         self.height= config.PUCK_HEIGHT
         # top left, top right, bot left, bot right
         self.color = config.WHITE
-        self.pos = position
+        self.pos = (position[0], position[1])
         self.bounds = (
                     self.pos,
                     (self.pos[0],self.height+self.pos[1]),
@@ -100,7 +100,7 @@ class Ball(Entity):
     pos - The position of the ball.
     """
     def __init__(self,position=[0,0]):
-        self.pos = {'x':position[0],'y':position[1]}
+        self.pos = (position[0], position[1])
         self.speed = [0,config.BALL_FALL_SPEED]
         self.size = 10
         self.color = config.RED

@@ -1,17 +1,42 @@
 import pygame
+import config
+import random
 """
 The class definitions for various things
 """
+
+
 class Entity:
+    """
+    The super class for most of the objects in this group.
+    """
+
+
+
     def __init__(self, position=[0,0]):
         self.pos = position
         self.speed = [0,0]
+
+    def set_position(self, position):
+        self.pos = position
+        self.bounds = position
 
     def draw(self, screen):
         """
         Draws the entity to the screen. This should really be overwritten by
         the sub classes.
         """
+        pass
+
+
+    def update(self):
+        """
+        This action should be called whenever the game state updates. In most
+        cases it should move the game pieces.
+
+        It needs to be overwritten by the derived class.
+        """
+        self.color = random.choice(config.COLORS)
         pass
 
 # end Entity definition 
@@ -24,22 +49,19 @@ class Puck(Entity):
         self.width = 50
         self.height= 25
         # top left, top right, bot left, bot right
-        self.color = (255, 255, 255)
+        self.color = config.WHITE
         self.pos = position
-        self.points = (
+        self.bounds = (
                     self.pos,
                     (self.pos[0],self.height+self.pos[1]),
                     (self.width+self.pos[0],self.height+self.pos[1]),
                     (self.width+self.pos[0],self.pos[1]),
                     
                 )
-
-    def hello(self):
-        print("hello world from a puck")
 
     def set_position(self, position):
         self.pos = position
-        self.points = (
+        self.bounds = (
                     self.pos,
                     (self.pos[0],self.height+self.pos[1]),
                     (self.width+self.pos[0],self.height+self.pos[1]),
@@ -47,11 +69,25 @@ class Puck(Entity):
                     
                 )
 
-    def draw(self, screen):
+
+    def move(self,screen, x, y):
+        """
+        Moves the puck by an amount of pixels either x or y. and erases the
+        image at the previous location.
+        """
+        self.draw(screen,config.BLACK)
+        self.set_position((self.pos[0] + x, self.pos[1] - y))
+
+    def update(self, screen):
+        self.move(screen, 0,1)
+
+    def draw(self, screen,color=None):
         """
         """
-        pygame.draw.polygon(screen,self.color,self.points)
-        pass
+        if not color:
+            color = self.color
+
+        pygame.draw.polygon(screen,color,self.bounds)
 
 # end Puck definition
 
@@ -64,16 +100,12 @@ class Ball(Entity):
         self.pos = position
         self.speed = [0,-1]
         self.size = 10
-        self.color = (255,0,0)
-
+        self.color = config.RED
 
     def draw(self, screen):
         """
         Draws the ball at it's current position on the screen
         """
         pygame.draw.circle(screen, self.color, self.pos, self.size)
-
-    def hello(self):
-        print("hello world from a ball")
 
 # end Ball definition

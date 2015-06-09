@@ -2,6 +2,7 @@
 import pygame
 import models
 import config
+import sys
 
 def spawn_ball():
     pass
@@ -15,10 +16,13 @@ def main():
     ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
     ball.pos = [32,32]
+    clock = pygame.time.Clock()
 
 
     # main game loop
     while True:
+        clock.tick(60)
+
         # handle events
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -26,10 +30,15 @@ def main():
 
         # handle input
         # update game state
-
-        # flip buffer
+        puck.update(w)
+        ball.update()
+        
+        # draw stuff
         puck.draw(w)
         ball.draw(w)
+
+
+        # flip buffer
         pygame.display.flip()
 
 if __name__ == '__main__':

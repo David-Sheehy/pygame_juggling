@@ -1,4 +1,5 @@
-#! /usr/bin/env python3 import pygame
+#! /usr/bin/env python3
+import pygame
 import models
 import config
 import sys
@@ -9,6 +10,7 @@ def spawn_ball():
 def main():
     # init window
     pygame.init()
+
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
 
     puck = models.Puck()
@@ -60,12 +62,18 @@ def main():
 
         # check if the ball should bounce (ie collides with the walls, ceiling
         # or puck.)
-        if ball.pos[1] >= config.HEIGHT:
-            ball.bounce()
-        if ball.pos[0] <= 0:
+        
+        if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
+            ball.bounce((1,-1))
+
+        elif ball.pos[0] <= 0:
             ball.bounce((-1,1))
-        if ball.pos[0] >= config.WIDTH:
+
+        elif ball.pos[0] >= config.WIDTH:
             ball.bounce((-1,1))
+
+        elif ball.pos[1] <= 0:
+            ball.bounce((1,-1))
         
         ball.update(w)
         # draw stuff

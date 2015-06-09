@@ -20,17 +20,41 @@ def main():
 
 
     # main game loop
+    MOVE_RIGHT = MOVE_LEFT = False
     while True:
         clock.tick(60)
 
         # handle events
+        # handle input
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 return
+            elif e.type == pygame.KEYDOWN:
+                if e.key == 275:
+                    MOVE_RIGHT = True
+                    # move right
+                elif e.key == 276:
+                    MOVE_LEFT = True
+                    # move left
+                else:
+                    pass
+            elif e.type == pygame.KEYUP:
+                MOVE_RIGHT = MOVE_LEFT = False
+            else:
+                # do nothing
+                pass
 
-        # handle input
         # update game state
-        puck.update(w)
+        # move the puck
+        if MOVE_RIGHT:
+            puck.move(w,1,0)
+        elif MOVE_LEFT:
+            puck.move(w,-1,0)
+        else:
+            pass
+
+
+        # move the ball
         ball.update()
         
         # draw stuff

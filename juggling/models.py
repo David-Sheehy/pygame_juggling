@@ -21,7 +21,7 @@ class Entity:
         self.pos = position
         self.bounds = position
 
-    def draw(self, screen):
+    def draw(self, screen, color = None):
         """
         Draws the entity to the screen. This should really be overwritten by
         the sub classes.
@@ -79,7 +79,7 @@ class Puck(Entity):
         self.set_position((self.pos[0] + x, self.pos[1] - y))
 
     def update(self, screen):
-        self.move(screen, 0,1)
+        pass
 
     def draw(self, screen,color=None):
         """
@@ -102,10 +102,12 @@ class Ball(Entity):
         self.size = 10
         self.color = config.RED
 
-    def draw(self, screen):
+    def draw(self, screen, color = None):
         """
         Draws the ball at it's current position on the screen
         """
-        pygame.draw.circle(screen, self.color, self.pos, self.size)
+        if not color:
+            color = self.color
+        pygame.draw.circle(screen, color, self.pos, self.size)
 
 # end Ball definition

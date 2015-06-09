@@ -70,10 +70,10 @@ def main():
             ball.bounce((-1,1))
 
         elif ball.pos[0] >= config.WIDTH:
-            ball.bounce((-1,1))
+            ball.bounce((-1,-1))
 
         elif ball.pos[1] <= 0:
-            ball.bounce((1,-1))
+            ball.bounce((-1,-1))
         
         ball.update(w)
         # draw stuff

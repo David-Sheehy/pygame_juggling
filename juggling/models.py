@@ -15,7 +15,7 @@ class Entity:
 
     def __init__(self, position=[0,0]):
         self.pos = position
-        self.speed = [0,0]
+        self.vel = [0,0]
 
     def set_position(self, position):
         """
@@ -100,10 +100,11 @@ class Ball(Entity):
     pos - The position of the ball.
     """
     def __init__(self,position=[0,0]):
+        random.seed()
         self.pos = (position[0], position[1])
-        self.speed = [0,config.BALL_FALL_SPEED]
+        self.vel = [0,config.BALL_FALL_SPEED]
         self.size = 10
-        self.color = config.RED
+        self.color = random.choice(config.COLORS[1:])
 
     def draw(self, screen, color = None):
         """
@@ -119,13 +120,16 @@ class Ball(Entity):
         self.set_position((self.pos[0] + x, self.pos[1] - y))
 
     def update(self, screen):
-        self.move(screen, self.speed[0], self.speed[1])
+        self.move(screen, self.vel[0], self.vel[1])
 
     def bounce(self, angle=(1,-1)):
         """
         reverses the balls velocity. Should probaly vary based on which
         part of the puck actually hit it.
         """
-        self.speed = (self.speed[0] * angle[0],self.speed[1] * angle[1])
-        pass
+        # bounce off at a random direction. I want the angle between the two to
+        # be low though
+        x = (self.vel[0] + random.randint(0,3))*angle[0]
+        y = (self.vel[1] + random.randint(0,3))*angle[1]
+        self.vel = (x,y)
 # end Ball definition

@@ -63,7 +63,7 @@ def main():
 
 
         # move the ball
-        ball.update()
+        ball.update(w)
         
         # draw stuff
         puck.draw(w)

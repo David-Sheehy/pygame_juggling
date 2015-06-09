@@ -98,7 +98,7 @@ class Ball(Entity):
     """
     def __init__(self,position=[0,0]):
         self.pos = position
-        self.speed = [0,-1]
+        self.speed = [0,0]
         self.size = 10
         self.color = config.RED
 
@@ -109,5 +109,15 @@ class Ball(Entity):
         if not color:
             color = self.color
         pygame.draw.circle(screen, color, self.pos, self.size)
+
+    def move(self,screen, x, y):
+        # cover up previous position
+        self.draw(screen, config.BLACK)
+        # move to new position
+        self.set_position((self.pos[0] + x, self.pos[0] - y))
+
+    def update(self, screen):
+        self.speed = (self.speed[0], self.speed[1] - config.BALL_SPEED)
+        self.move(screen, self.speed[0], self.speed[1])
 
 # end Ball definition

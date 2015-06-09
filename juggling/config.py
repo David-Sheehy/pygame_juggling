@@ -22,7 +22,12 @@ DOWN=274
 RIGHT=275
 LEFT=276
 
-# puck stuff
+# puck variables
 PUCK_WIDTH = 50
 PUCK_HEIGHT = 25
-PUCK_SPEED = 2
+PUCK_SPEED = 4
+
+# ball variables
+BALL_RADIUS = 10
+BALL_ACCEL =  3
+BALL_SPEED = 2

@@ -57,7 +57,21 @@ class Puck(Entity):
 
 class Ball(Entity):
     """
+    The ball controlling class.
+    pos - The position of the ball.
     """
+    def __init__(self,position=[0,0]):
+        self.pos = position
+        self.speed = [0,-1]
+        self.size = 10
+        self.color = (255,0,0)
+
+
+    def draw(self, screen):
+        """
+        Draws the ball at it's current position on the screen
+        """
+        pygame.draw.circle(screen, self.color, self.pos, self.size)
 
     def hello(self):
         print("hello world from a ball")

@@ -12,8 +12,9 @@ def main():
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
 
     puck = models.Puck()
-
+    ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
+    ball.pos = [32,32]
 
 
     # main game loop
@@ -28,6 +29,7 @@ def main():
 
         # flip buffer
         puck.draw(w)
+        ball.draw(w)
         pygame.display.flip()
 
 if __name__ == '__main__':

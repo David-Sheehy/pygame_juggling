@@ -98,7 +98,7 @@ class Ball(Entity):
     """
     def __init__(self,position=[0,0]):
         self.pos = position
-        self.speed = [0,0]
+        self.speed = [0,config.BALL_FALL_SPEED]
         self.size = 10
         self.color = config.RED
 
@@ -112,12 +112,16 @@ class Ball(Entity):
 
     def move(self,screen, x, y):
         # cover up previous position
-        self.draw(screen, config.BLACK)
-        # move to new position
-        self.set_position((self.pos[0] + x, self.pos[0] - y))
+        self.draw(screen,config.BLACK)
+        self.set_position((self.pos[0] + x, self.pos[1] - y))
 
     def update(self, screen):
-        self.speed = (self.speed[0], self.speed[1] - config.BALL_SPEED)
         self.move(screen, self.speed[0], self.speed[1])
 
+    def bounce(self, angle):
+        """
+        reverses the balls velocity. Should probaly vary based on which
+        part of the puck actually hit it.
+        """
+        pass
 # end Ball definition

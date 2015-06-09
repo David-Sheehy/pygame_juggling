@@ -21,6 +21,7 @@ def main():
 
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
+    MOVE_UP = MOVE_DOWN = False
     while True:
         clock.tick(60)
 
@@ -30,7 +31,11 @@ def main():
             if e.type == pygame.QUIT:
                 return
             elif e.type == pygame.KEYDOWN:
-                if e.key == 275:
+                if e.key == 273:
+                    MOVE_UP = True
+                elif e.key == 274:
+                    MOVE_DOWN = True
+                elif e.key == 275:
                     MOVE_RIGHT = True
                     # move right
                 elif e.key == 276:
@@ -40,7 +45,11 @@ def main():
                     # do nothing
                     pass
             elif e.type == pygame.KEYUP:
-                if e.key == 275:
+                if e.key == 273:
+                    MOVE_UP = False
+                elif e.key == 274:
+                    MOVE_DOWN = False
+                elif e.key == 275:
                     MOVE_RIGHT = False
                 elif e.key == 276:
                     MOVE_LEFT = False
@@ -55,15 +64,16 @@ def main():
         # move the puck
         if MOVE_RIGHT and puck.pos[0] < config.WIDTH - puck.width:
             puck.move(w,config.PUCK_SPEED,0)
-        elif MOVE_LEFT and puck.pos[0] > 0:
+        if MOVE_LEFT and puck.pos[0] > 0:
             puck.move(w,-config.PUCK_SPEED,0)
-        else:
-            # do nothing
-            pass
+        if MOVE_UP:
+            ball.move(w,0,5)
+        if MOVE_DOWN:
+            ball.move(w,0,-5)
 
+        # check if the ball should bounce (ie collides with the walls, ceiling
+        # or puck.)
 
-        # move the ball
-        ball.update(w)
         
         # draw stuff
         puck.draw(w)

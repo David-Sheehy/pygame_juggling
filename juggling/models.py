@@ -18,7 +18,10 @@ class Entity:
         self.speed = [0,0]
 
     def set_position(self, position):
-        self.pos = position
+        """
+        position should be a tuple containing two integers
+        """
+        self.pos = {'x':position[0],'y':position[1]}
         self.bounds = position
 
     def draw(self, screen, color = None):
@@ -97,7 +100,7 @@ class Ball(Entity):
     pos - The position of the ball.
     """
     def __init__(self,position=[0,0]):
-        self.pos = position
+        self.pos = {'x':position[0],'y':position[1]}
         self.speed = [0,config.BALL_FALL_SPEED]
         self.size = 10
         self.color = config.RED

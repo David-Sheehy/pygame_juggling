@@ -121,10 +121,11 @@ class Ball(Entity):
     def update(self, screen):
         self.move(screen, self.speed[0], self.speed[1])
 
-    def bounce(self, angle):
+    def bounce(self, angle=(1,-1)):
         """
         reverses the balls velocity. Should probaly vary based on which
         part of the puck actually hit it.
         """
+        self.speed = (self.speed[0] * angle[0],self.speed[1] * angle[1])
         pass
 # end Ball definition

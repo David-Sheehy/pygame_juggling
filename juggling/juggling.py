@@ -1,5 +1,4 @@
-#! /usr/bin/env python3
-import pygame
+#! /usr/bin/env python3 import pygame
 import models
 import config
 import sys
@@ -31,11 +30,7 @@ def main():
             if e.type == pygame.QUIT:
                 return
             elif e.type == pygame.KEYDOWN:
-                if e.key == 273:
-                    MOVE_UP = True
-                elif e.key == 274:
-                    MOVE_DOWN = True
-                elif e.key == 275:
+                if e.key == 275:
                     MOVE_RIGHT = True
                     # move right
                 elif e.key == 276:
@@ -45,11 +40,7 @@ def main():
                     # do nothing
                     pass
             elif e.type == pygame.KEYUP:
-                if e.key == 273:
-                    MOVE_UP = False
-                elif e.key == 274:
-                    MOVE_DOWN = False
-                elif e.key == 275:
+                if e.key == 275:
                     MOVE_RIGHT = False
                 elif e.key == 276:
                     MOVE_LEFT = False
@@ -66,15 +57,17 @@ def main():
             puck.move(w,config.PUCK_SPEED,0)
         if MOVE_LEFT and puck.pos[0] > 0:
             puck.move(w,-config.PUCK_SPEED,0)
-        if MOVE_UP:
-            ball.move(w,0,5)
-        if MOVE_DOWN:
-            ball.move(w,0,-5)
 
         # check if the ball should bounce (ie collides with the walls, ceiling
         # or puck.)
-
+        if ball.pos[1] >= config.HEIGHT:
+            ball.bounce()
+        if ball.pos[0] <= 0:
+            ball.bounce((-1,1))
+        if ball.pos[0] >= config.WIDTH:
+            ball.bounce((-1,1))
         
+        ball.update(w)
         # draw stuff
         puck.draw(w)
         ball.draw(w)

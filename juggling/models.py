@@ -46,8 +46,8 @@ class Puck(Entity):
     """
 
     def __init__(self, position=[0,0]):
-        self.width = 50
-        self.height= 25
+        self.width = config.PUCK_WIDTH
+        self.height= config.PUCK_HEIGHT
         # top left, top right, bot left, bot right
         self.color = config.WHITE
         self.pos = position

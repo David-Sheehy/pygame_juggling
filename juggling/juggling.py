@@ -37,20 +37,28 @@ def main():
                     MOVE_LEFT = True
                     # move left
                 else:
+                    # do nothing
                     pass
             elif e.type == pygame.KEYUP:
-                MOVE_RIGHT = MOVE_LEFT = False
+                if e.key == 275:
+                    MOVE_RIGHT = False
+                elif e.key == 276:
+                    MOVE_LEFT = False
+                else:
+                    # do nothing
+                    pass
             else:
                 # do nothing
                 pass
 
         # update game state
         # move the puck
-        if MOVE_RIGHT:
-            puck.move(w,1,0)
-        elif MOVE_LEFT:
-            puck.move(w,-1,0)
+        if MOVE_RIGHT and puck.pos[0] < config.WIDTH - puck.width:
+            puck.move(w,config.PUCK_SPEED,0)
+        elif MOVE_LEFT and puck.pos[0] > 0:
+            puck.move(w,-config.PUCK_SPEED,0)
         else:
+            # do nothing
             pass
 
 

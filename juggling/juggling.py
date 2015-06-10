@@ -13,6 +13,8 @@ def main():
 
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
 
+    # set up various objects
+    counter = models.Counter()
     puck = models.Puck()
     ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
@@ -20,9 +22,12 @@ def main():
     clock = pygame.time.Clock()
 
 
+
+
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
     MOVE_UP = MOVE_DOWN = False
+
     while True:
         clock.tick(60)
 
@@ -66,6 +71,9 @@ def main():
         if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
             # paddle
             ball.bounce((1,-1))
+            counter.erase(w)
+            counter.increment()
+
         elif ball.pos[0] <= 0: 
             # left wall
             ball.bounce((-1,1))
@@ -73,7 +81,7 @@ def main():
             ball.bounce((-1,1))
 
         elif ball.pos[1] <= 0:
-            ball.bounce(-1,-1)
+            ball.bounce((-1,-1))
 
         elif ball.pos[1] >= config.HEIGHT:
             # ball lost
@@ -81,9 +89,9 @@ def main():
 
         ball.update(w)
         # draw stuff
+        counter.display(w)
         puck.draw(w)
         ball.draw(w)
-
 
         # flip buffer
         pygame.display.flip()

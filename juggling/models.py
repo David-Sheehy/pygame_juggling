@@ -137,3 +137,32 @@ class Ball(Entity):
         self.vel = (0,0)
         self.in_play = False
 # end Ball definition
+
+class Counter:
+    """
+    The counter which will display the amount of times in a row the player has
+    bounced the ball gainst the paddle.
+    """
+    def __init__(self):
+        self.count = 0
+        self.pos = config.COUNTER_POSITION
+
+    def increment(self):
+        self.count += 1
+
+    def reset(self):
+        self.count = 0
+
+    def display(self, screen, color=config.WHITE):
+        f = pygame.font.Font(None,128)
+        d = f.render(self.count.__str__(),1,color)
+        screen.blit(d, self.pos)
+
+    def erase(self, screen):
+        points = ((self.pos[0], self.pos[1]),
+                  (self.pos[0], self.pos[1] + 128),
+                  (self.pos[0]+128, self.pos[1] + 128),
+                  (self.pos[0]+128, self.pos[1]),
+                 )
+        pygame.draw.polygon(screen,config.BLACK, points)
+

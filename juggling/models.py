@@ -136,6 +136,10 @@ class Ball(Entity):
     def stop(self):
         self.vel = (0,0)
         self.in_play = False
+
+    def erase(self, screen):
+        self.draw(screen, color=config.BLACK)
+
 # end Ball definition
 
 class Counter:
@@ -159,10 +163,10 @@ class Counter:
         screen.blit(d, self.pos)
 
     def erase(self, screen):
-        points = ((self.pos[0], self.pos[1]),
-                  (self.pos[0], self.pos[1] + 128),
-                  (self.pos[0]+128, self.pos[1] + 128),
-                  (self.pos[0]+128, self.pos[1]),
+        points = ((self.pos[0]-256, self.pos[1]-256),
+                  (self.pos[0]-256, self.pos[1] + 256),
+                  (self.pos[0]+256, self.pos[1] + 256),
+                  (self.pos[0]+256, self.pos[1] - 256),
                  )
         pygame.draw.polygon(screen,config.BLACK, points)
 

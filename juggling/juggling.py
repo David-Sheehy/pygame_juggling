@@ -92,7 +92,10 @@ def main():
             ball.stop()
             counter.erase(w)
             counter.reset()
-
+            # move ball to start
+            ball.erase(w)
+            ball.set_position(config.BALL_START)
+        
 
         ball.update(w)
         # draw stuff

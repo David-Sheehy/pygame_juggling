@@ -2,10 +2,14 @@
 import pygame
 import models
 import config
-import sys
 
+
+balls = []
 def spawn_ball():
-    pass
+    """
+    Add a ball to the game.
+    """
+    balls.append(models.Ball())
 
 def main():
     # init window
@@ -13,14 +17,13 @@ def main():
 
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
 
-    balls = []
     # set up various objects
     counter = models.Counter()
     puck = models.Puck()
-    ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
-    ball.pos = config.BALL_START
     clock = pygame.time.Clock()
+
+    spawn_ball()
 
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
@@ -65,44 +68,45 @@ def main():
 
         # check if the ball should bounce (ie collides with the walls, ceiling
         # or puck.)
-        
-        if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
-            # paddle
-            if ball.pos[0] - puck.pos[0] < puck.width/2:
-                ball.bounce((1, -1), english=(-2,0))
-            else:
-                ball.bounce((1, -1), english=(2,0))
-            # counter stuff
-            counter.erase(w)
-            counter.increment()
+        for b in balls:    
+            if (b.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= b.pos[0] and b.pos[0] <= puck.pos[0] + puck.width):
+                # paddle
+                if b.pos[0] - puck.pos[0] < puck.width/2:
+                    b.bounce((1, -1), english=(-2,0))
+                else:
+                    b.bounce((1, -1), english=(2,0))
+                # counter stuff
+                counter.erase(w)
+                counter.increment()
 
-        elif ball.pos[0] - config.BALL_RADIUS <= 0: 
-            # left wall
-            ball.bounce(angle=(-1,1))
-        elif ball.pos[0] + config.BALL_RADIUS >= config.WIDTH:
-            # right wall
-            ball.bounce((-1,1))
+            elif b.pos[0] - config.BALL_RADIUS <= 0: 
+                # left wall
+                b.bounce(angle=(-1,1))
+            elif b.pos[0] + config.BALL_RADIUS >= config.WIDTH:
+                # right wall
+                b.bounce((-1,1))
 
-        elif ball.pos[1] - config.BALL_RADIUS <= 0:
-            # top
-            ball.bounce((1,-1))
+            elif b.pos[1] - config.BALL_RADIUS <= 0:
+                # top
+                b.bounce((1,-1))
 
-        elif ball.pos[1] >= config.HEIGHT:
-            # ball lost
-            ball.stop()
-            counter.erase(w)
-            counter.reset()
-            # move ball to start
-            ball.erase(w)
-            ball.set_position(config.BALL_START)
-            ball.start()
-        
+            elif b.pos[1] >= config.HEIGHT:
+                # b lost
+                b.stop()
+                counter.erase(w)
+                counter.reset()
+                # move b to start
+                b.erase(w)
+                b.set_position(config.BALL_START)
+                b.start()
+            
 
-        ball.update(w)
+            b.update(w)
         # draw stuff
         counter.display(w)
         puck.draw(w)
-        ball.draw(w)
+        for b in balls:
+            b.draw(w)
 
         # flip buffer
         pygame.display.flip()

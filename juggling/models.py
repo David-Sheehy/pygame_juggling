@@ -99,9 +99,12 @@ class Ball(Entity):
     The ball controlling class.
     pos - The position of the ball.
     """
-    def __init__(self,position=[0,0]):
+    def __init__(self,position=None):
         random.seed()
-        self.pos = (position[0], position[1])
+        if not position:
+            self.pos = config.BALL_START
+        else:
+            self.pos = (position[0], position[1])
         self.size = 10
         self.color = random.choice(config.COLORS[1:])
         self.start()

@@ -70,15 +70,16 @@ def main():
         # check if the ball should bounce (ie collides with the walls, ceiling
         # or puck.)
         for b in balls:    
-            if (b.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= b.pos[0] and b.pos[0] <= puck.pos[0] + puck.width):
-                # paddle
-                if b.pos[0] - puck.pos[0] < puck.width/2:
-                    b.bounce((1, -1), english=(-2,0))
-                else:
-                    b.bounce((1, -1), english=(2,0))
-                # counter stuff
-                counter.erase(w)
-                counter.increment()
+            if (b.pos[1] >= config.HEIGHT - puck.height)\
+                and (puck.pos[0] <= b.pos[0] and b.pos[0] <= puck.pos[0] + puck.width):
+                    # paddle
+                    if b.pos[0] - puck.pos[0] < puck.width/2:
+                        b.bounce((1, -1), english=(-2,0))
+                    else:
+                        b.bounce((1, -1), english=(2,0))
+                    # counter stuff
+                    counter.erase(w)
+                    counter.increment()
 
             elif b.pos[0] - config.BALL_RADIUS <= 0: 
                 # left wall
@@ -101,6 +102,12 @@ def main():
                 b.set_position(config.BALL_START)
                 b.start()
             
+            # see if it's colliding with any other balls
+            for ob in balls:
+                if b != ob and ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
+                    and (abs(b.pos[1] - ob.pos[1]) <= config.BALL_RADIUS)):
+                    b.bounce((-1,-1),(1,0))
+                    ob.bounce((-1,-1),(1,0))
 
             b.update(w)
 

@@ -1,2 +1,0 @@
-create lose state
-allow multiple balls

@@ -67,7 +67,10 @@ def main():
         
         if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
             # paddle
-            ball.bounce((1, -1), english=(2,0))
+            if ball.pos[0] - puck.pos[0] < puck.width/2:
+                ball.bounce((1, -1), english=(-2,0))
+            else:
+                ball.bounce((1, -1), english=(2,0))
             # counter stuff
             counter.erase(w)
             counter.increment()

@@ -13,6 +13,7 @@ def main():
 
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
 
+    balls = []
     # set up various objects
     counter = models.Counter()
     puck = models.Puck()
@@ -89,6 +90,9 @@ def main():
         elif ball.pos[1] >= config.HEIGHT:
             # ball lost
             ball.stop()
+            counter.erase(w)
+            counter.reset()
+
 
         ball.update(w)
         # draw stuff

@@ -21,9 +21,6 @@ def main():
     ball.pos = [300,32]
     clock = pygame.time.Clock()
 
-
-
-
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
     MOVE_UP = MOVE_DOWN = False
@@ -70,18 +67,21 @@ def main():
         
         if (ball.pos[1] >= config.HEIGHT - puck.height) and (puck.pos[0] <= ball.pos[0] and ball.pos[0] <= puck.pos[0] + puck.width):
             # paddle
-            ball.bounce((1,-1))
+            ball.bounce((1, -1), english=(2,0))
+            # counter stuff
             counter.erase(w)
             counter.increment()
 
-        elif ball.pos[0] <= 0: 
+        elif ball.pos[0] - config.BALL_RADIUS <= 0: 
             # left wall
-            ball.bounce((-1,1))
-        elif ball.pos[0] >= config.WIDTH:
+            ball.bounce(angle=(-1,1))
+        elif ball.pos[0] + config.BALL_RADIUS >= config.WIDTH:
+            # right wall
             ball.bounce((-1,1))
 
-        elif ball.pos[1] <= 0:
-            ball.bounce((-1,-1))
+        elif ball.pos[1] - config.BALL_RADIUS <= 0:
+            # top
+            ball.bounce((1,-1))
 
         elif ball.pos[1] >= config.HEIGHT:
             # ball lost

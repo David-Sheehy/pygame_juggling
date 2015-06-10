@@ -122,15 +122,15 @@ class Ball(Entity):
     def update(self, screen):
         self.move(screen, self.vel[0], self.vel[1])
 
-    def bounce(self, angle=(1,-1)):
+    def bounce(self, angle=(1,-1), english=(0,0)):
         """
         reverses the balls velocity. Should probaly vary based on which
         part of the puck actually hit it.
         """
         # bounce off at a random direction. I want the angle between the two to
         # be low though
-        x = (self.vel[0] + random.randint(0,3))*angle[0]
-        y = (self.vel[1])*angle[1]
+        x = (self.vel[0] + english[0])*angle[0]
+        y = (self.vel[1] + english[1])*angle[1]
         self.vel = (x,y)
 
     def stop(self):

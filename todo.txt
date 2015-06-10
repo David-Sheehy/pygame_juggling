@@ -1,0 +1,2 @@
+the ball.bounce function needs to be changed so that it won't direct the ball
+towards the wall.

@@ -102,9 +102,9 @@ class Ball(Entity):
     def __init__(self,position=[0,0]):
         random.seed()
         self.pos = (position[0], position[1])
-        self.vel = [0,config.BALL_FALL_SPEED]
         self.size = 10
         self.color = random.choice(config.COLORS[1:])
+        self.start()
 
     def draw(self, screen, color = None):
         """
@@ -136,6 +136,9 @@ class Ball(Entity):
     def stop(self):
         self.vel = (0,0)
         self.in_play = False
+
+    def start(self):
+        self.vel = [0,config.BALL_FALL_SPEED]
 
     def erase(self, screen):
         self.draw(screen, color=config.BLACK)

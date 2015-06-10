@@ -19,7 +19,7 @@ def main():
     puck = models.Puck()
     ball = models.Ball()
     puck.set_position([config.WINDOW_SIZE[0]/2,config.WINDOW_SIZE[1]-25])
-    ball.pos = [300,32]
+    ball.pos = config.BALL_START
     clock = pygame.time.Clock()
 
     # main game loop
@@ -95,6 +95,7 @@ def main():
             # move ball to start
             ball.erase(w)
             ball.set_position(config.BALL_START)
+            ball.start()
         
 
         ball.update(w)

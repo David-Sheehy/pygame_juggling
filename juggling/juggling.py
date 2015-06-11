@@ -10,7 +10,6 @@ def spawn_ball():
     Add a ball to the game.
     """
     balls.append(models.Ball())
-    balls.append(models.Ball())
 
 def main():
     # init window
@@ -112,9 +111,7 @@ def main():
             b.update(w)
 
         # check if we should add balls
-        if counter.count == 8 and len(balls) < 2:
-            spawn_ball()
-        if counter.count == 16 and len(balls) < 3:
+        if( counter.count >= (2<<len(balls)+1)):
             spawn_ball()
 
         # draw stuff

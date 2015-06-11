@@ -3,7 +3,6 @@ import pygame
 import models
 import config
 
-
 balls = []
 
 def spawn_ball():
@@ -16,8 +15,8 @@ def main():
     # init window
     pygame.init()
 
+    pygame.display.set_caption("juggling")
     w = pygame.display.set_mode(config.WINDOW_SIZE) 
-
     # set up various objects
     counter = models.Counter()
     puck = models.Puck()

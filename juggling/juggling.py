@@ -83,15 +83,15 @@ def main():
             elif b.pos[0] - config.BALL_RADIUS <= 0: 
                 # left wall
                 b.bounce(angle=(-1,1))
-            elif b.pos[0] + config.BALL_RADIUS >= config.WIDTH:
+            elif b.pos[0] + config.BALL_RADIUS >= config.WIDTH - 2:
                 # right wall
                 b.bounce((-1,1))
 
-            elif b.pos[1] - config.BALL_RADIUS <= 0:
+            elif b.pos[1] - config.BALL_RADIUS <= 2:
                 # top
                 b.bounce((1,-1))
 
-            elif b.pos[1] >= config.HEIGHT:
+            elif b.pos[1] >= config.HEIGHT - 2:
                 # b lost
                 b.stop()
                 counter.erase(w)
@@ -106,7 +106,7 @@ def main():
                 if b != ob and ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
                     and (abs(b.pos[1] - ob.pos[1]) <= config.BALL_RADIUS)):
                     b.bounce((-1,-1),(1,0))
-                    ob.bounce((-1,-1),(1,0))
+                    ob.bounce((-1,-1),(0,1))
 
             b.update(w)
 
@@ -118,6 +118,7 @@ def main():
 
         # draw stuff
         counter.display(w)
+
         puck.draw(w)
         for b in balls:
             b.draw(w)

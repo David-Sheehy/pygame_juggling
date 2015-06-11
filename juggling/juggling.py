@@ -12,6 +12,9 @@ def spawn_ball():
     balls.append(models.Ball())
 
 def main():
+    # runtime variables
+    balls_in_play = 0   # should be increased whenever
+
     # init window
     pygame.init()
 
@@ -24,6 +27,9 @@ def main():
     clock = pygame.time.Clock()
 
     spawn_ball()
+    balls_in_play += 1  # This could be initialized to 1, but it's
+                        # incrememented to remind me to increment it after each
+                        # spawn
 
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
@@ -100,6 +106,8 @@ def main():
                 b.erase(w)
                 b.set_position(config.BALL_START)
                 b.start()
+
+                # remove that ball from play
             
             # see if it's colliding with any other balls
             for ob in balls:
@@ -111,8 +119,9 @@ def main():
             b.update(w)
 
         # check if we should add balls
-        if( counter.count >= (2<<len(balls)+1)):
+        if( counter.count >= (2<<(balls_in_play + 1))):
             spawn_ball()
+            balls_in_play += 1
 
         # draw stuff
         counter.display(w)

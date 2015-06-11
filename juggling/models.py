@@ -102,11 +102,11 @@ class Ball(Entity):
     def __init__(self,position=None):
         random.seed()
         if not position:
-            self.pos = config.BALL_START
+            self.pos = [random.randint(2*config.BALL_RADIUS,config.WIDTH-2*config.BALL_RADIUS), 32]
         else:
             self.pos = (position[0], position[1])
-        self.size = 10
-        self.color = random.choice(config.COLORS[1:])
+        self.size = config.BALL_RADIUS
+        self.color = random.choice(config.COLORS[2:])
         self.start()
 
     def draw(self, screen, color = None):

@@ -10,6 +10,7 @@ def spawn_ball():
     Add a ball to the game.
     """
     balls.append(models.Ball())
+    balls.append(models.Ball())
 
 def main():
     # init window
@@ -105,8 +106,8 @@ def main():
             for ob in balls:
                 if b != ob and ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
                     and (abs(b.pos[1] - ob.pos[1]) <= config.BALL_RADIUS)):
-                    b.bounce((-1,-1),(1,0))
-                    ob.bounce((-1,-1),(0,1))
+                    b.bounce((-1,1),(1,0))
+                    ob.bounce((-1,1),(0,1))
 
             b.update(w)
 

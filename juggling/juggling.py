@@ -114,6 +114,8 @@ def main():
                                    ( -config.BALL_RADIUS * (i + 1),
                                     -config.BALL_RADIUS)
                                   )
+                    balls_in_play.remove(b)
+                    balls_out_play.append(b)
                 else:
                     # move the only ball back into play.
                     b.erase(w)
@@ -132,12 +134,15 @@ def main():
             b.update(w)
 
         # check if we should add balls, or put one back into play.
-        if( counter.count >= (2<<(len(balls_in_play) + 1))):
+        if( counter.count >= (2<<(len(balls_in_play)-1))):
             if len(balls_out_play) <= 0:
                 spawn_ball()
             else:
                 # move a ball back into play
-                balls_in_play.append(balls_out_play.pop())
+                b = balls_out_play.pop()
+                balls_in_play.append(b)
+                b.set_position(config.BALL_START)
+                b.start()
                 pass
 
 

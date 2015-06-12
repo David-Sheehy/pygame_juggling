@@ -3,18 +3,18 @@ import pygame
 import models
 import config
 
-balls = []
+balls_in_play = []   # The balls currently in the game
+balls_out_play = []  # The balls which, exist, but aren't used
 
 def spawn_ball():
     """
     Add a ball to the game.
+    in_play - The amount of balls currently in play.
+    returns whether a ball was created.
     """
-    balls.append(models.Ball())
+    balls_in_play.append(models.Ball())
 
 def main():
-    # runtime variables
-    balls_in_play = 0   # should be increased whenever
-
     # init window
     pygame.init()
 
@@ -27,9 +27,9 @@ def main():
     clock = pygame.time.Clock()
 
     spawn_ball()
-    balls_in_play += 1  # This could be initialized to 1, but it's
-                        # incrememented to remind me to increment it after each
-                        # spawn
+
+    print(len(balls_in_play))
+
 
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
@@ -74,7 +74,7 @@ def main():
 
         # check if the ball should bounce (ie collides with the walls, ceiling
         # or puck.)
-        for b in balls:    
+        for i,b in enumerate(balls_in_play):
             if (b.pos[1] >= config.HEIGHT - puck.height)\
                 and (puck.pos[0] <= b.pos[0] and b.pos[0] <= puck.pos[0] + puck.width):
                     # paddle
@@ -98,19 +98,32 @@ def main():
                 b.bounce((1,-1))
 
             elif b.pos[1] >= config.HEIGHT - 2:
-                # b lost
+                # b has been lost
+                # stop the motion
                 b.stop()
+
+                # clear the counter
                 counter.erase(w)
                 counter.reset()
-                # move b to start
-                b.erase(w)
-                b.set_position(config.BALL_START)
-                b.start()
+
+                if len(balls_in_play) > 1:
+                    # remove ball from play
+                    b.erase(w)
+                    # keep it slightly off screen
+                    b.set_position(
+                                   ( -config.BALL_RADIUS * (i + 1),
+                                    -config.BALL_RADIUS)
+                                  )
+                else:
+                    # move the only ball back into play.
+                    b.erase(w)
+                    b.set_position(config.BALL_START)
+                    b.start()
 
                 # remove that ball from play
             
             # see if it's colliding with any other balls
-            for ob in balls:
+            for ob in balls_in_play:
                 if b != ob and ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
                     and (abs(b.pos[1] - ob.pos[1]) <= config.BALL_RADIUS)):
                     b.bounce((-1,1),(1,0))
@@ -118,16 +131,23 @@ def main():
 
             b.update(w)
 
-        # check if we should add balls
-        if( counter.count >= (2<<(balls_in_play + 1))):
-            spawn_ball()
-            balls_in_play += 1
+        # check if we should add balls, or put one back into play.
+        if( counter.count >= (2<<(len(balls_in_play) + 1))):
+            if len(balls_out_play) <= 0:
+                spawn_ball()
+            else:
+                # move a ball back into play
+                balls_in_play.append(balls_out_play.pop())
+                pass
+
+
+
 
         # draw stuff
         counter.display(w)
 
         puck.draw(w)
-        for b in balls:
+        for b in balls_in_play:
             b.draw(w)
 
         # flip buffer

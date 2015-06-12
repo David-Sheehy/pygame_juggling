@@ -28,9 +28,6 @@ def main():
 
     spawn_ball()
 
-    print(len(balls_in_play))
-
-
     # main game loop
     MOVE_RIGHT = MOVE_LEFT = False
     MOVE_UP = MOVE_DOWN = False
@@ -134,7 +131,7 @@ def main():
             b.update(w)
 
         # check if we should add balls, or put one back into play.
-        if( counter.count >= (2<<(len(balls_in_play)-1))):
+        if( counter.count >= (2<<(len(balls_in_play)))):
             if len(balls_out_play) <= 0:
                 spawn_ball()
             else:

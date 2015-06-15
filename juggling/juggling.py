@@ -10,7 +10,6 @@ def spawn_ball():
     """
     Add a ball to the game.
     in_play - The amount of balls currently in play.
-    returns whether a ball was created.
     """
     balls_in_play.append(models.Ball())
 
@@ -73,7 +72,8 @@ def main():
         # or puck.)
         for i,b in enumerate(balls_in_play):
             if (b.pos[1] >= config.HEIGHT - puck.height)\
-                and (puck.pos[0] <= b.pos[0] and b.pos[0] <= puck.pos[0] + puck.width):
+                and (puck.pos[0] <= b.pos[0] \
+                and b.pos[0] <= puck.pos[0] + puck.width):
                     # paddle
                     if b.pos[0] - puck.pos[0] < puck.width/2:
                         b.bounce((1, -1), english=(-2,0))
@@ -123,8 +123,10 @@ def main():
             
             # see if it's colliding with any other balls
             for ob in balls_in_play:
-                if b != ob and ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
+                if b != ob and\
+                    ((abs(b.pos[0] - ob.pos[0]) <= config.BALL_RADIUS)\
                     and (abs(b.pos[1] - ob.pos[1]) <= config.BALL_RADIUS)):
+
                     b.bounce((-1,1),(1,0))
                     ob.bounce((-1,1),(0,1))
 
@@ -141,9 +143,6 @@ def main():
                 b.set_position(config.BALL_START)
                 b.start()
                 pass
-
-
-
 
         # draw stuff
         counter.display(w)
